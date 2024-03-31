@@ -1,0 +1,25 @@
+{
+  "name": "database-management-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "database": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Database-Management-System"
+  },
+  "keywords": [
+    "database"
+  ],
+  "author": "Israel Favour",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0"
+  }
+}
