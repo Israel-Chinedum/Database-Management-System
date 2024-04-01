@@ -14,9 +14,12 @@
 #header{
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 90%;
     border-bottom: 1px solid;
     padding: 10px;
+    margin: auto;
+    padding-right: 5%;
+    padding-left: 5%;
 }
 
 #header header{
@@ -33,18 +36,55 @@
 
 .navigation-bar ul li{
     padding: 10px;
-    border: 1px solid transparent;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .navigation-bar ul li:hover{
     background-color: rgba(4, 189, 4, 0.185);
-    border-color: rgb(4, 189, 4);
 }
 
 .navigation-bar{
     width: 50%;
+}
+
+ #body{
+    width: 95%;
+    height: 70vh;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    margin: auto;
+} 
+
+.side-panel{
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 0;
+    border-top: 0;
+}
+
+.side-panel ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 30%;
+    width: 100%;
+}
+
+.side-panel ul li{
+    padding: 10px;
+    cursor: pointer;
+}
+
+.side-panel ul li:hover{
+    background-color: rgba(4, 189, 4, 0.185);
+}
+
+.main{
+    /* border: 1px solid; */
 }
 
 
