@@ -29,13 +29,22 @@
             <!-- SIDE PANEL -->
             <div class="side-panel">
                 <ul>
-                    <li>Create Database</li>
+                    <li id="showdb-panel-btn">Create Database</li>
                     <li>Delete Database</li>
                     <li>Edit Database</li>
                 </ul>
             </div>
             <!-- MAIN PANEL -->
-            <div class="main"></div>
+            <div class="main">
+
+               <form action="" id="create-db-panel">
+                <input type="button" value="X" id="rm-btn">
+                <input type="text" placeholder="Enter Name Of Database">
+                <input type="date">
+                <input type="button" value="Create" id="create-db-btn">
+               </form>
+
+            </div>
         </section>
 
         <!-- FOOTER SECTION -->
@@ -44,6 +53,6 @@
         </section>
     </div>
 
-    <script src="home.js"></script>
+    <script type="module" src="home js/home.js"></script>
 </body>
 </html>
