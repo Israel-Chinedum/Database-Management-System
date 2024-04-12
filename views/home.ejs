@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>D.M.S</title>
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
 
     <div id="container">
+        
         <!-- HEADER SECTION -->
         <section id="header">
             <header>
                 <h1>D.M.S</h1>
+
             </header>
         <!-- HEADER NAVIGATION BAR -->
             <nav class="navigation-bar">
@@ -37,11 +40,11 @@
             <!-- MAIN PANEL -->
             <div class="main">
 
-               <form action="" id="create-db-panel">
+               <form action="home" method="post" id="create-db-panel">
                 <input type="button" value="X" id="rm-btn">
-                <input type="text" placeholder="Enter Name Of Database">
-                <input type="date">
-                <input type="button" value="Create" id="create-db-btn">
+                <input type="text" placeholder="Enter Name Of Database" name="DatabaseName">
+                <input type="date" name="Date">
+                <input type="submit" value="Create" id="create-db-btn">
                </form>
 
             </div>

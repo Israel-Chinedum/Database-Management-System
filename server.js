@@ -1,7 +1,13 @@
-//IMPORT PACKAGES
-const express = require('express');
 
-//PASSING THE EXPRESS FUNCTION TO THE VARIABLE APP
+//IMPORT PACKAGES
+import express from 'express';
+import bodyParser from 'body-parser';
+import fs from 'fs';
+import gr from './get.js';
+import pr from './post.js';
+
+
+//PASSING THE EXPRESS FUNCTION TO THE APP VARIABLE
 const app = express();
 
 //SET VIEW ENGINE
@@ -10,11 +16,15 @@ app.set('view engine', 'ejs');
 //SET EXPRESS TO USE STATIC FILES
 app.use(express.static('static'));
 
-app.get('', (req, res)=>{
-    res.render('home');
-});
+app.use(bodyParser.urlencoded({extended: false}));
 
+//HANDLING GET REQUESTS
+gr.get(app, fs);
 
+//HANDLING POST REQUESTS
+pr.post(app, fs);
+
+//LISTENING FOR REQUESTS
 app.listen(3000, 'localhost', () => console.log('Database Is Now Online!'));
 
 
