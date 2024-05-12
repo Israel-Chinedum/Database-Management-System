@@ -6,9 +6,11 @@ import fs from 'fs';
 import gr from './get.js';
 import pr from './post.js';
 
-
 //PASSING THE EXPRESS FUNCTION TO THE APP VARIABLE
 const app = express();
+
+//SET EXPRESS TO RECIEVE JSON STRINGS
+app.use(express.json());
 
 //SET VIEW ENGINE
 app.set('view engine', 'ejs');

@@ -33,21 +33,21 @@
             <div class="side-panel">
                 <ul>
                     <li id="showdb-panel-btn">Create Database</li>
-                    <li>Delete Database</li>
+                    <li id="del-db-btn">Delete Database</li>
                     <li>Edit Database</li>
                 </ul>
             </div>
             <!-- MAIN PANEL -->
             <div class="main">
 
-               <form action="home" method="post" id="create-db-panel">
-                <input type="button" value="X" id="rm-btn">
-                <input type="text" placeholder="Enter Name Of Database" name="DatabaseName">
-                <input type="date" name="Date">
-                <input type="submit" value="Create" id="create-db-btn">
-               </form>
+                <p id="msg">
+                    <%=msg%>
+                </p>
 
-            </div>
+              <%- include("../partials/createDbPanel")%>
+              <%- include("../partials/deleteDbPanel")%>
+
+               <div class="database_container"></div>
         </section>
 
         <!-- FOOTER SECTION -->
