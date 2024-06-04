@@ -1,7 +1,6 @@
 
 //IMPORT PACKAGES
 import express from 'express';
-import bodyParser from 'body-parser';
 import fs from 'fs';
 import gr from './get.js';
 import pr from './post.js';
@@ -18,7 +17,7 @@ app.set('view engine', 'ejs');
 //SET EXPRESS TO USE STATIC FILES
 app.use(express.static('static'));
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false}));
 
 //HANDLING GET REQUESTS
 gr.get(app, fs);

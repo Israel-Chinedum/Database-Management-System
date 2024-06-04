@@ -4,6 +4,14 @@
     border: 0;
     color: rgb(4, 189, 4);
     font-size: 1.2rem;
+    --myColor: rgba(4, 189, 4, 0.185);
+    --panelBkgColor: rgba(4, 189, 4, 0.452);
+    --hoverBkg: rgb(4, 189, 4);
+    --hoverColor: black;
+}
+
+body{
+    overflow: hidden;
 }
 
 #container{
@@ -44,7 +52,7 @@
 }
 
 .navigation-bar ul li:hover{
-    background-color: rgba(4, 189, 4, 0.185);
+    background-color: var(--myColor);
 }
 
 .navigation-bar{
@@ -63,10 +71,15 @@
     border: 1px solid;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 0;
     border-top: 0;
     border-left: 0;
+}
+
+#dbName{
+    margin-bottom: 20px;
 }
 
 .side-panel ul{
@@ -92,6 +105,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 
@@ -103,13 +118,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background-color: rgba(4, 189, 4, 0.452);
-    background-image: url(../);
+    background-color: var(--panelBkgColor);
     border-radius: 1rem;
     border: 5px groove green;
     display: none;
     position: absolute;
     margin-top: 12vh;
+    transform: translate(0,0);
 }
 
 #create-db-panel input{
@@ -126,8 +141,8 @@
 }
 
 #create-db-btn:hover{
-    background-color: rgb(4, 189, 4);
-    color: white;
+    background-color: var(--hoverBkg);
+    color: var(--hoverColor);
 }
 
 #rm-btn{
@@ -138,7 +153,7 @@
 #rm-btn:hover{
     background-color: rgba(128, 128, 128, 0.601);
     background-color: rgb(4, 189, 4);
-    color: white;
+    color: var(--hoverColor);
 }
 
 #msg{
@@ -181,16 +196,7 @@
     width: max-content;
     display: inline-block;
     height: 30px;
-    color: white;
-    animation: move 5s infinite linear;
-}
-
-@keyframes move{
-    from{
-        margin-left: -100%;
-    } to{
-        margin-left: 100%;
-    }
+    color: var(--hoverColor);
 }
 
 .del-db-panel{
@@ -232,7 +238,7 @@
 .del-input:hover{
     cursor: pointer;
     background-color: rgb(4, 189, 4);
-    color: white;
+    color: var(--hoverColor);
 } 
 
 .del-db-list{
@@ -279,11 +285,199 @@
     background-color: rgb(0, 39, 0);
     border-radius: 50%;
     border: 5px solid black;
+}
+
+.table-holder{
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+    border-bottom: 1px solid green;
+}
+
+.table-holder:hover{
+ background-color: var(--myColor);
+}
+
+.table-holder p{
+    margin-left: 10px;
+}
+
+#tableDiv{
+    flex-direction: column;
+    background-color: var(--panelBkgColor);
+    padding: 10px;
+    border-radius: 10px;
+    border: 5px groove green;
+    position: absolute;
+    margin-top: 12vh;
+    display: none;
+}
+
+
+#tableDiv .input{
+    margin-bottom: 15px;
+    width: 30vw;
+    padding: 10px;
+    background-color: black;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#tableDiv #next-btn{
+    width: 50%;
+    margin: auto;
+    cursor: pointer;
+}
+
+#tableDiv #next-btn:hover{
+    background-color: var(--hoverBkg);
+    color: var(--hoverColor);
+}
+
+#tableDiv #exit{
+    margin: 10px;
+    width: 50px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: black;
+    cursor: pointer;
+}
+
+#tableDiv #exit:hover{
+    background-color: var(--hoverBkg);
+    color: var(--hoverColor);
+}
+
+#tableForm{
+    /* display: none; */
+    display: flex;
+    flex-direction: column;
+}
+
+#tableForm input{
+    margin: 10px;
+}
+
+#tableHeaders{
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(0, 128, 0, 0.815);
+    border: 5px groove green;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 370px;
+    text-align: center;
+    margin-top: 12vh;
+    position: absolute;
+}
+
+#primary-key{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#primary-key label{
+    color: black;
+}
+
+#checkbox{
+    width: 30px;
+    height: 30px;
+    cursor: pointer
+}
+
+#header-exit{
+    align-self: start;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: black;
+}
+
+#header-exit:hover{
+    background-color: var(--hoverBkg);
+    color: var(--hoverColor);
+}
+
+#tableHeaders p{
+  margin-top: 10px;
+  color: var(--hoverColor);
+  margin-bottom: 10px;
+}
+
+#tableHeaders .header{
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: black;
+    padding: 5px;
+    text-align: center;
+}
+
+#send{
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 25px;
+    cursor: pointer;
+    background-color: black;
+}
+
+#send:hover{
+    background-color: var(--hoverBkg);
+    color: var(--hoverColor);
+}
+
+#auto-gen-container{
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 2px solid green;
 } 
+
+.auto-gen{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(0, 39, 0);
+    border-radius: 50%;
+    border: 5px solid black;
+} 
+
+#table-name{
+    display: none;
+}
+
+#databaseName{
+    display: none;
+}
+
 
 .glow{
     background-color: rgb(3, 212, 3);
     border-color: lawngreen;
+}
+
+
+.table{
+    padding: 10px;
+    border-bottom: 1px solid green;
+    cursor: pointer;
+}
+
+.table:hover{
+    background-color: var(--myColor);
+}
+
+.table-container{
+    width: 100%;
+    height: 100%;
+    margin-bottom: 70px;
 }
 
 

@@ -5,6 +5,20 @@ class PostRequests{
     }
 
 
+   remJson(fs, dbName, res){
+        fs.readdir(`./All_Database/${dbName}`, (err, data)=>{
+          if(err) throw err;
+          console.log(data);
+          let newDataArr = [];
+          for(let i of data){
+            const split = i.split('.json');
+            newDataArr.push(split[0]);
+          }
+          console.log(newDataArr)
+          res.json(newDataArr)
+        });
+   }
+
     post(app, fs){
        
         const initMessage = `This directory was created on the:
@@ -12,6 +26,7 @@ class PostRequests{
         and at:
         ${this.date.getHours()}h:${this.date.getMinutes()}m:${this.date.getSeconds()}s`;
 
+        //ROUTE HANDLER FOR CREATING DATABASES
         app.post('/home', (req, res)=>{
 
           //CHECKS IF DATABASE CONTAINER ALREADY EXISTS, AND IF NOT CREATE DATABASE CONTAINER
@@ -58,6 +73,7 @@ class PostRequests{
             
 
           }
+
           //SENDS BACK A MESSAGE IF DATABASE ALREADY EXISTS
            else{
 
@@ -76,51 +92,91 @@ class PostRequests{
           
          });
 
+         //ROUTE HANDLER FOR DELETING DATABASES
          app.post('/delete',  (req, res) => {
 
            console.log(req.body);
 
            let currList;
 
-          //  let formerDbList = [];
-
+          //READS THE DIRECTORY WHERE ALL THE DATABASES ARE STORED
           fs.readdir('./All_Database', (err, data)=>{
             if(err) throw err;
             currList = data.length - req.body['dbToDelete'].length;
           })
 
            return Promise.resolve(req.body['dbToDelete'].forEach(db => {
-
-             fs.rmdir(`./All_Database/${db}`, err=>{
+            //DELETES THE DATABASES GOTTEN FROM THE USERS REQUEST
+             fs.rm(`./All_Database/${db}`, {recursive: true, force: true}, err=>{
                if(err) throw err;
-
              });
-            }))
-            
-            .then(
 
+            })).then(
+            //SENDS BACK THE CURRENT LIST OF DATABASES AFTER THE REQUESTED ONES HAVE BEEN DELETED
               () =>{
                 const sendData = setInterval(()=>{
                   fs.readdir('./All_Database', (err, data)=>{
                     if(err) throw err;
+                    if(data.length != currList) return;
                     if(data.length == currList){
                       res.json(data);
-                      clearInterval(sendData)
+                      clearInterval(sendData);
                     }
                   })
-                },0.1);
+                },500);
               }
-
-              // fs.readdir('./All_Database', (error, info)=>{
-              //   if(error) throw error;
-              //   fs.readdir('./All_Database', (err, data)=>{
-              //     if(err) throw err;
-              //     res.json(data);
-              //     console.log(data)
-              //   })
-               //})
             );
 
+         });
+
+         //ROUTE HANDLER FOR CREATING TABLES
+         app.post('/createTable', (req, res)=>{
+          console.log(req.body);
+
+          const dbName = req.body['dbName'];
+          const tableName = req.body['tableName'];
+
+          delete req.body['dbName'];
+          delete req.body['tableName'];
+
+          console.log(req.body);
+
+          if(!fs.existsSync(`./All_Database/${dbName}/${tableName}.json`)){
+            fs.writeFile(`./All_Database/${dbName}/${tableName}.json`, '[]', err=>{
+              if(err) throw err;
+              fs.readFile(`./All_Database/${dbName}/${tableName}.json`, (err, data)=>{
+                if(err) throw err;
+        
+                const newData = JSON.parse(data);
+                newData.push(req.body);
+
+                fs.writeFile(`./All_Database/${dbName}/${tableName}.json`, JSON.stringify(newData), error=>{
+                  if(error) throw error;
+                  res.send('Table has been created! 👍')
+                 });
+
+              })
+            })
+          } else{
+            console.log('Already exists');
+            res.send('Table aready exists 🤨')
+          }
+
+          
+          
+         });
+
+         app.post('/getTable', (req, res) =>{
+          this.remJson(fs, `${req.body['dbName']}`, res);
+         });
+
+         app.post('/tableContent', (req, res)=>{
+          console.log(req.body)
+          fs.readFile(`./All_Database/${req.body['dbName']}/${req.body['tableName']}.json`, (err, data) => {
+            if(err) throw err;
+            console.log(data.toString());
+            res.json(JSON.parse(data));
+          });
          });
     
     }

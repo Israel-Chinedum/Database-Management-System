@@ -1,7 +1,7 @@
 class Display{
 
-    show(panelName, display){
-         panelName.style.display = display;
+    show(panelName, show){
+         panelName.style.display = show;
     }
 
     remove(panelName){
