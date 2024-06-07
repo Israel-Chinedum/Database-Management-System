@@ -78,6 +78,109 @@ const getDelDb = () =>{
 
 }
 
+function genTableContent(data){
+
+    let z = 0;
+    for(let i of data){
+        console.log(i)
+        const table_row = document.createElement('tr');
+        table_row.className = 'table-row';
+        document.querySelector('#table-body').appendChild(table_row);
+
+        for(let x in i){
+            console.log(i[x])
+            document.querySelector('#table-body').children[z].innerHTML += `<td>${i[x]}</td>`
+        }
+        z++
+    }
+}
+
+ function loadTableContentSP(dbName){
+    document.querySelector('.side-panel').innerHTML = `<ul>
+                                                        <li id="add-rec">Add Record</li>
+                                                        <li id="del-rec">Delete Record</li>
+                                                        <li>Edit Record</li>
+                                                      </ul>
+                                                      <p id="dbName">${dbName}</p>
+                                                     `
+
+     document.querySelector('#add-rec').addEventListener('click', ()=>{
+
+        const table_headers = document.querySelector('#table-body').children[0];
+        // document.querySelector('#table-content').innerHTML += `<div id="add-rec-form"></div>`;
+        display.show(document.querySelector('#add-rec-form'), 'flex')
+        document.querySelector('#add-rec-form').innerHTML += `<input id="add-rec-exit" type="button" value="X"/>`;
+        for(let i = 0; i < table_headers.children.length; i++){
+           document.querySelector('#add-rec-form').innerHTML += `<input type="text" placeholder="${table_headers.children[i].innerHTML}" class="field"/>`;
+        }
+        document.querySelector('#add-rec-form').innerHTML += `<input id="add-rec-btn" type="button" value="Add Record"/>`;
+
+        document.querySelector('#add-rec-exit').addEventListener('click', () =>{
+            display.remove(document.querySelector('#add-rec-form'));
+            document.querySelector('#add-rec-form').innerHTML = '';
+        });
+
+        document.querySelector('#add-rec-btn').addEventListener('click', ()=>{
+
+            const data = [];
+            const record = {};
+            const default_details = {
+                dbName: `${document.querySelector('#dbName').innerHTML}`,
+                tableName: `${document.querySelector('#space').innerHTML}`
+            }
+            let fields = document.querySelectorAll('.field');
+            const tr = document.querySelector('#table-body').children[0]
+        
+           for(let i = 0; i < fields.length; i++){
+            console.log(i)
+            record[`${tr.children[i].innerHTML}`] = `${fields[i].value}`;
+           }
+           console.log(record);
+
+           data.push(default_details);
+           data.push(record);
+
+            fetch('/addRecord', {
+                headers: {'Content-Type': 'application/json'},
+                method: 'post',
+                body: JSON.stringify(data)
+            }).then(res => res.json()).then(info =>{
+                console.log(info);
+                document.querySelectorAll('.table-row').forEach(row =>{
+                    document.querySelector('#table-body').removeChild(row); 
+                });
+                genTableContent(info);
+                display.remove(document.querySelector('#add-rec-form'));
+                document.querySelector('#add-rec-form').innerHTML = '';
+            })
+        });
+    
+
+    });
+
+    
+}
+
+function genTable(data){
+
+    loadTableContentSP(document.querySelector('#dbName').innerHTML);
+
+    document.querySelector('.main').removeChild(document.querySelector('.table-container'));
+    const table_content = document.createElement('div');
+    const table = document.createElement('table');
+    const tbody = document.createElement('tbody');
+
+    table_content.id = 'table-content';
+    table.id = 'table';
+    tbody.id = 'table-body';
+
+    table_content.appendChild(table);
+    table.appendChild(tbody);
+    document.querySelector('.main').appendChild(table_content);
+
+    genTableContent(data);
+}
+
 function loadTableSP(){
     document.querySelector('.side-panel').innerHTML = `<ul>
                                                         <li id="showTable-panel-btn">Create Table</li>
@@ -87,6 +190,8 @@ function loadTableSP(){
                                                       <p id="dbName"></p>
                                                     `
 }
+
+
 
 async function loadTables(){
 
@@ -115,7 +220,7 @@ async function loadTables(){
         document.querySelectorAll('.table').forEach(table =>{
 
             table.addEventListener('click', (e)=>{
-
+                document.querySelector('#space').innerHTML = e.target.innerHTML;
                 const data = {
                     dbName: document.querySelector('#dbName').innerHTML,
                     tableName: e.target.innerHTML
@@ -127,6 +232,7 @@ async function loadTables(){
                     body: JSON.stringify(data)
                 }).then(res => res.json()).then(data =>{
                     console.log(data)
+                    genTable(data);
                 });
             });
         });
@@ -284,17 +390,23 @@ document.querySelector('#next-btn').addEventListener('click', ()=>{
 
     document.querySelector('#send').addEventListener('click', ()=>{
         const tableHeaders = {};
+        const default_details = {
+            dbName: document.querySelector('#dbName').innerHTML,
+            tableName: document.querySelector('#tableName').value
+        }
+
+        const data = [];
+        data.push(default_details);
+        data.push(tableHeaders);
+
         document.querySelectorAll('.header').forEach(heading => {
             tableHeaders[`${heading.value}`] = heading.value
         });
 
-        tableHeaders['dbName'] = document.querySelector('#dbName').innerHTML;
-        tableHeaders['tableName'] = document.querySelector('#tableName').value;
-
         fetch('/createTable', {
             headers: {'Content-Type': 'application/json'},
             method: 'post',
-            body: JSON.stringify(tableHeaders)
+            body: JSON.stringify(data)
         }).then(res => res.text()).then(data => {
               console.log(data);
               document.querySelector('.main').removeChild(document.querySelector('.table-container'));

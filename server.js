@@ -3,7 +3,7 @@
 import express from 'express';
 import fs from 'fs';
 import gr from './get.js';
-import pr from './post.js';
+import pr from './post_route_handlers/post.js';
 
 //PASSING THE EXPRESS FUNCTION TO THE APP VARIABLE
 const app = express();
