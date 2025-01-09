@@ -15,7 +15,6 @@
         <section id="header">
             <header>
                 <h1>D.M.S</h1>
-
             </header>
         <!-- HEADER NAVIGATION BAR -->
             <nav class="navigation-bar">
@@ -34,18 +33,15 @@
                 <ul>
                     <li id="showdb-panel-btn">Create Database</li>
                     <li id="del-db-btn">Delete Database</li>
-                    <li>Edit Database</li>
                 </ul>
             </div>
             <!-- MAIN PANEL -->
             <div class="main">
                 <p id="space"></p>
-                <p id="msg">
-                    <%=msg%>
-                </p>
+                <p id="msg"><%=msg%></p>
 
               <%- include("../partials/createDbPanel")%>
-              <%- include("../partials/deleteDbPanel")%>
+              <%- include("../partials/deletePanel")%>
               <%- include("../partials/createTableForm")%>
               <div id="add-rec-form"></div>
 
@@ -59,5 +55,6 @@
     </div>
 
     <script type="module" src="home js/home.js"></script>
+    <script type="module" src="home js/homePage_post_requests.js"></script>
 </body>
 </html>

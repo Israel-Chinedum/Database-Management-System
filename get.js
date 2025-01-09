@@ -7,14 +7,29 @@ class GetRequests{
                 res.sendFile('./sample.txt', {root: './'});
             })
 
-            app.get('/', (req, res)=>{
+            app.get('/', async (req, res)=>{
 
-                fs.readdir('./All_Database', (err, data)=>{
-                    if(err) throw err;
-                    
+                if(fs.existsSync('./All_Database')){
+
+                    fs.readdir('./All_Database', (err, data)=>{
+                        if(err) throw err;
                         res.render('home', {msg: ''});
-                        
                     });
+
+                } else{
+
+                    await fs.mkdir('./All_Database', err => {
+                        if(err) throw err;
+                    });
+
+                    fs.readdir('./All_Database', (err, data)=>{
+                        if(err) throw err;
+                        res.render('home', {msg: ''});
+                    });
+
+                }
+
+                
             
             });  
 

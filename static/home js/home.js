@@ -5,8 +5,8 @@ const create_db_panel = document.querySelector('#create-db-panel');
 const showdb_panel_btn = document.querySelector('#showdb-panel-btn');
 const msg = document.querySelector('#msg');
 const databaseContainer = document.querySelector('.database_container');
-const delDbPanel = document.querySelector('.del-db-panel');
-const delDbList = document.querySelector('.del-db-list');
+const delPanel = document.querySelector('.del-panel');
+const delList = document.querySelector('.del-list');
 const delDbSearch = document.querySelector('#del-db-search');
 const delDbSearchInput = document.querySelector('#del-db-search-input');
 const del_db_btn = document.querySelector('#del-db-btn');
@@ -14,8 +14,66 @@ const del_database_btn = document.querySelector('#del-database-btn');
 const delExit = document.querySelector('#del-exit');
 let dbArrList = [];
 let delArrList = [];
+let tableArrList = [];
 
 
+
+
+export const loadDb = async (info) =>{
+
+    await fetch('http://localhost:3000/getDatabase')
+    .then(res => res.json())
+    .then((data) => {
+        dbArrList = [...data];
+        console.log(dbArrList);
+        let i = 0;
+        let output = '';
+        for(let x of dbArrList){
+            i++
+            output += `<div id="${i}" class="database">
+                        <div class="p-holder">
+                        <p>${x}</p>  
+                        </div>
+                        </div>      
+                        `
+        }
+        databaseContainer.innerHTML = output;
+    });
+        
+    
+    if(info){
+        msg.innerText = info;
+        display.shortDisplay(msg, 'flex');
+    }
+ 
+}
+
+//ADDED EVENT LISTENER TO THE WINDOW SO THAT WHEN THE DOM LOADS ALL THE DATABASES ARE FETCHED FROM THE SERVER
+window.addEventListener('DOMContentLoaded', () => {
+    loadDb('');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//====================EVERYTHING ABOUT CREATING AND DELETING THE DATABASES====================
+
+//THIS CODE IS RESPONSIBLE FOR SETTING THE DISPLAY OF THE CREATE DATABASE FORM
 showdb_panel_btn.addEventListener('click', ()=>{
     display.show(create_db_panel, 'flex');
 });
@@ -26,29 +84,12 @@ create_db_panel.addEventListener('click', (e)=>{
     }
 });
 
-const loadDb = () =>{
-    let i = 0;
-    let output = '';
-    for(let x of dbArrList){
-        i++
-        output += `<div id="${i}" class="database">
-                    <div class="p-holder">
-                    <p>${x}</p>  
-                    </div>
-                    </div>      
-                    `
-    }
-
-    databaseContainer.innerHTML = output;
-
-}
-
 //CREATED A FUNCTION TO GET AND DISPLAY LIST OF DATABASES TO BE DELETED FROM dbArrList
-const getDelDb = () =>{
-    let output = '';
-    dbArrList.forEach(db =>{
-        delDbList.innerHTML += `<div class="del-db">
-                                <p class="del-db-name">${db}</p>
+const getDelData = (data) =>{
+    
+    data.forEach(name =>{
+        delList.innerHTML += `<div class="del-db">
+                                <p class="del-db-name">${name}</p>
                                 <div id="selector-container">
                                 <div class="selector"></div>
                                </div>
@@ -78,6 +119,71 @@ const getDelDb = () =>{
 
 }
 
+//ADDED AN EVENT LISTENER TO THE DELETE DATABASE BUTTON SO THAT WHEN CLICKED ON IT SETS THE INNER HTML OF THE delDbList TO NOTHING, SETS THE DISPLAY STYLE FOR THE DELETE PANLEL AND CALLS THE getDelDb FUNCTION
+del_db_btn.addEventListener('click', ()=>{
+
+    display.show(delPanel, 'flex')
+    delList.innerHTML = '';
+    getDelData(dbArrList);
+        
+})
+
+//CREATED A SEARCH ENGINE FOR THE DATABASES TO BE DELETED
+delDbSearchInput.addEventListener('keyup', ()=>{
+    const delDbName = document.querySelectorAll('.del-db-name');
+    const delDbNameArr = Array.from(delDbName);
+    sEngine.search(delDbNameArr, delDbSearchInput);
+});
+
+
+del_database_btn.addEventListener('click', async()=>{
+
+    const data = {
+        dbToDelete: delArrList
+    }
+
+     await fetch('http://localhost:3000/delete', {
+        headers: {'Content-Type': 'application/json'},
+        method: 'post',
+        body: JSON.stringify(data)
+    }).then(res => res.json()).then(info => {
+        dbArrList = [...info];
+        delArrList = [];
+        console.log(dbArrList)
+        console.log(info)
+        databaseContainer.innerHTML = '';
+        delList.innerHTML = '';
+        loadDb();
+        getDelData(dbArrList);
+    })
+
+
+});
+
+delExit.addEventListener('click', ()=>{
+    display.remove(delPanel);
+    delArrList = [];
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//====================EVERYTHING ABOUT CREATING, EDITING AND DELETING THE TABLE CONTENT====================
+
 function genTableContent(data){
 
     let z = 0;
@@ -95,7 +201,8 @@ function genTableContent(data){
     }
 }
 
- function loadTableContentSP(dbName){
+//THIS FUNCTION IS RESPONSIBLE FOR LOADING THE TABLE CONTROLS ON THE SIDE PANEL
+function loadTableContentSP(dbName){
     document.querySelector('.side-panel').innerHTML = `<ul>
                                                         <li id="add-rec">Add Record</li>
                                                         <li id="del-rec">Delete Record</li>
@@ -104,6 +211,7 @@ function genTableContent(data){
                                                       <p id="dbName">${dbName}</p>
                                                      `
 
+//THIS CODE IS RESPONSIBLE FOR ADDING RECORDS TO A TABLE
      document.querySelector('#add-rec').addEventListener('click', ()=>{
 
         const table_headers = document.querySelector('#table-body').children[0];
@@ -181,6 +289,26 @@ function genTable(data){
     genTableContent(data);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//====================EVERYTHING ABOUT CREATING AND DELETING TABLES====================
+//THIS FUNCTION LOADS UP THE CONTROLS FOR CREATING AND DELETING TABLES ON THE SIDE PANEL
 function loadTableSP(){
     document.querySelector('.side-panel').innerHTML = `<ul>
                                                         <li id="showTable-panel-btn">Create Table</li>
@@ -189,10 +317,16 @@ function loadTableSP(){
                                                       </ul>
                                                       <p id="dbName"></p>
                                                     `
+                    
+    document.querySelector('#del-table-btn').addEventListener('click', () => {
+        display.show(delPanel, 'flex');
+        delList.innerHTML = '';
+        delArrList = [];
+        getDelData(tableArrList);
+    });
 }
 
-
-
+//THIS FUNCTION IS RESPONSIBLE FOR FETCHING A LIST OF ALL THE TABLES FROM THE SERVER AND DISPLAYING THEM ON THE MAIN SECTION
 async function loadTables(){
 
        await fetch('/getTable', {
@@ -200,6 +334,8 @@ async function loadTables(){
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({dbName: document.querySelector('#dbName').innerHTML})
         }).then(res => res.json()).then(data => {
+            tableArrList = [...data];
+            console.log(tableArrList);
             document.querySelector('.database_container').style.display = 'none';
             const table_container =  document.createElement('div');
             table_container.className = 'table-container';
@@ -238,71 +374,15 @@ async function loadTables(){
         });
 }
 
-//ADDED EVENT LISTENER TO THE WINDOW SO THAT WHEN THE DOM LOADS ALL THE DATABASES ARE FETCHED FROM THE SERVER
-window.addEventListener('DOMContentLoaded', async ()=>{
-
-
-    await fetch('http://localhost:3000/getDatabase')
-    .then(res => res.json())
-    .then(data => {
-        dbArrList = [...data];
-        console.log(dbArrList);
-        loadDb();
-    })
-        
-    
-    if(msg.innerHTML != ''){
-        display.shortDisplay(msg, 'flex');
-    }
-
-});
 
 
 
-//ADDED AN EVENT LISTENER TO THE DELETE DATABASE BUTTON SO THAT WHEN CLICKED ON IT SETS THE INNER HTML OF THE delDbList TO NOTHING, SETS THE DISPLAY STYLE FOR THE DELTE PANLEL AND CALLS THE getDelDb FUNCTION
-del_db_btn.addEventListener('click', ()=>{
-
-    document.querySelector('.del-db-panel').style.display = 'flex';
-    delDbList.innerHTML = '';
-    getDelDb();
-        
-})
-
-//CREATED A SEARCH ENGINE FOR THE DATABASES TO BE DELETED
-delDbSearchInput.addEventListener('keyup', ()=>{
-    const delDbName = document.querySelectorAll('.del-db-name');
-    const delDbNameArr = Array.from(delDbName);
-    sEngine.search(delDbNameArr, delDbSearchInput);
-});
 
 
-del_database_btn.addEventListener('click', async()=>{
-
-    const data = {
-        dbToDelete: delArrList
-    }
-
-     await fetch('http://localhost:3000/delete', {
-        headers: {'Content-Type': 'application/json'},
-        method: 'post',
-        body: JSON.stringify(data)
-    }).then(res => res.json()).then(info => {
-        dbArrList = [...info];
-        delArrList = [];
-        console.log(dbArrList)
-        console.log(info)
-        databaseContainer.innerHTML = '';
-        delDbList.innerHTML = '';
-        loadDb();
-        getDelDb();
-    })
 
 
-});
 
-delExit.addEventListener('click', ()=>{
-    document.querySelector('.del-db-panel').style.display = 'none';
-});
+
 
 //ADDED EVENT LISTENERS TO THE DATABASES SO THAT WHEN CLICKED ON THEY DISPLAY THE DATA IN THEM
 document.querySelector('.main').addEventListener('click', (e) =>{   
@@ -354,7 +434,7 @@ document.querySelector('#next-btn').addEventListener('click', ()=>{
         tHeaders.innerHTML += `<input type="text" class="header"/>`;
     }
     
-    tHeaders.innerHTML += `<input type="button" id="send" value="Submit" />`
+    tHeaders.innerHTML += `<input type="button" id="send" value="Submit" />`;
     
     display.show(tHeaders, 'flex');
     display.remove(document.querySelector('#tableDiv'));

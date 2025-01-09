@@ -23,23 +23,13 @@ export const homeRoute = (app, fs) =>{
         //CHECKS IF DATABASE ALREADY EXISTS, AND IF NOT CREATE DATABASE
         if(!fs.existsSync(`./All_Database/${req.body['DatabaseName']}`)){
 
+          console.log(req.body);
+
           fs.mkdir(`./All_Database/${req.body['DatabaseName']}`, err => {
             if(err) throw err;
             console.log('Database has just been created!');
+            res.json('Database has been created successfully ✔');
           });
-
-          // fs.writeFile(`All_Database/${req.body['DatabaseName']}/creation.txt`, initMessage, err => {
-          //   if(err) throw err;
-          //   console.log('Creation file has been written to databse!');
-          // });
-
-          fs.readdir('./All_Database', (err, data)=>{
-            if(err) throw err;
-            let i = 0;
-
-            res.render('home', {msg: 'Database has been created successfully! ✔', data, i});
-            
-            });  
 
           
 
