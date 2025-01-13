@@ -2,10 +2,11 @@
     margin: 0;
     padding: 0;
     border: 0;
-    color: rgb(4, 189, 4);
+    color: #0078D7;
     font-size: 1.1rem;
-    --myColor: rgba(4, 189, 4, 0.185);
-    --panelBkgColor: rgba(4, 189, 4, 0.452);
+    font-family: sans-serif;
+    --myColor: #0078D7;
+    --bkgColor: rgb(7, 7, 7);
     --hoverBkg: rgb(4, 189, 4);
     --hoverColor: black;
     --innerColor: rgb(22, 22, 22);
@@ -17,9 +18,10 @@
 #container{
     width: 100svw;
     height: 100svh;
-    background: black;
+    background: rgb(7, 7, 7);
     box-sizing: border-box;
     padding: 4px;
+    overflow: hidden;
 }
 
 ::-webkit-scrollbar{
@@ -27,7 +29,7 @@
 }
 
 ::-webkit-scrollbar-thumb{
-    border: 1px solid green;
+    border: 1px solid var(--myColor);
     border-radius: 1rem;
 }
 
@@ -69,6 +71,12 @@
 
 .navigation-bar ul li:hover{
     background-color: var(--myColor);
+    color: black;
+}
+
+.navigation-bar ul li a:hover{
+    background-color: var(--myColor);
+    color: black;
 }
 
 .navigation-bar{
@@ -86,13 +94,10 @@
     display: grid;
     grid-template-columns: 20% 80%;
     margin: auto;
+    overflow: hidden;
 } 
 
-
-
-
-
-/* ==========SIDE PANEL SECTION========== */
+/* =====SIDE PANEL SECTION===== */
 .side-panel{
     border: 1px solid;
     display: flex;
@@ -102,10 +107,6 @@
     border-bottom: 0;
     border-top: 0;
     border-left: 0;
-}
-
-#dbName{
-    margin-bottom: 20px;
 }
 
 .side-panel ul{
@@ -125,37 +126,52 @@
 }
 
 .side-panel ul li:hover{
-    background-color: rgba(4, 189, 4, 0.185);
+    background-color: var(--myColor);
+    color: black;
 }
 
-
-
-
-
-/* ==========MAIN SECTION========== */
+/* =====MAIN SECTION===== */
 .main{
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-x: hidden;
-    overflow-y: scroll;
+}
+
+#msg{
+    color: var(--myColor);
+    background-color: var(--bkgColor);
+    padding: 10px;
+    width: max-content;
+    position: absolute;
+    border: 2px groove var(--myColor);
+    border-radius: 7px;
+    display: none;
+    margin-top: 3vh;
 }
 
 
+
+
+
+
+/* =====DATABASE STYLING===== */
+
+
+/* =====DATABASE MAIN SECTION===== */
 #create-db-panel{
-    width: 40vw;
+    width: 40%;
     height: 30%;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background-color: black;
+    background-color: var(--bkgColor);
     border-radius: 1rem;
-    border: 5px groove green;
+    border: 5px groove var(--myColor);
     display: none;
     position: absolute;
     margin-top: 12vh;
-    transform: translate(0,0);
 }
 
 #create-db-panel input{
@@ -163,7 +179,6 @@
     background-color: var(--innerColor);
     border-radius: 5px;
     text-align: center;
-    /* border-bottom: 1px solid green; */
     outline: none;
 }
 
@@ -174,75 +189,73 @@
 }
 
 #create-db-btn:hover{
-    background-color: var(--hoverBkg);
+    background-color: var(--myColor);
     color: var(--hoverColor);
 }
 
-#rm-btn{
+#create-db-panel #rm-btn{
     width: 70px;
     cursor: pointer;
 }
 
-#rm-btn:hover{
-    background-color: rgba(128, 128, 128, 0.601);
-    background-color: rgb(4, 189, 4);
+#create-db-panel #rm-btn:hover{
+    background-color: var(--myColor);
     color: var(--hoverColor);
 }
 
-#msg{
-    padding: 10px;
-    border: 10px;
-    border-radius: 5px;
-    width: max-content;
-    height: max-content;
-    background-color: rgba(4, 189, 4, 0.185);
-    margin-top: 10px;
-    color: white;
-    display: none;
-    position: absolute;
-}
-
 .database_container{
-    width: 95%;
-    padding-top: 5vh;
-    display: flex;
-    flex-wrap: wrap;
-    box-sizing: border-box;
+    width: 100%;
+    max-height: 98%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(184px, 1fr));
+    /* overflow-y: scroll; */
 }
 
 .database_container .database{
-    width: 184px;
     height: 15vh;
     margin: 10px;
-    align-content: end;
     overflow: hidden;
-    border: 1px solid green;
+    border: 1px solid var(--myColor);
     border-radius: 5px;
     cursor: pointer;
+    display: grid;
+    background-color: var(--innerColor);
 }
+
+.database span{
+    justify-self: center;
+    align-self: center;
+    font-size: 4rem;
+    -webkit-text-stroke: 1.5px var(--myColor);
+    color: transparent;
+}
+
 
 .p-holder{
     width: 100%;
-    background-color: rgba(4, 189, 4, 0.317);
+    background-color: var(--myColor);
+    height: max-content;
+    align-self: end;
 }
 
-.database_container p{
+.database_container .database p{
     width: max-content;
-    display: inline-block;
     height: 30px;
     color: var(--hoverColor);
 }
 
-.del-panel{
+
+/* =====DELETE DATABASE PANEL/DIV STYLING===== */
+#del-panel{
     width: 500px;
     height: 70vh;
     position: absolute;
     margin-top: 10vh;
-    background-color: black;
+    background-color: var(--bkgColor);
     flex-direction: column;
     align-content: center;
     border-radius: 1rem;
-    border: 5px groove green;
+    border: 5px groove var(--myColor);
     display: none;
 }
 
@@ -266,12 +279,12 @@
 
 .del-inputs :nth-child(2){
     width: 50%;
-    outline-color: rgb(4, 189, 4);
+    outline-color: var(--myColor);
 }
 
 .del-input:hover{
     cursor: pointer;
-    background-color: rgb(4, 189, 4);
+    background-color: var(--myColor);
     color: var(--hoverColor);
 } 
 
@@ -288,7 +301,7 @@
 }
 
 .del-list::-webkit-scrollbar-thumb{
-    background: rgb(3, 22, 3);
+    background: rgba(0, 0, 255, 0.068);
     border-radius: 10px;
 }
 
@@ -297,7 +310,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 10px 10px 10px;
-    border-bottom: 1px solid green;
+    border-bottom: 1px solid var(--myColor);
 } 
 
 #selector-container{
@@ -309,18 +322,94 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border: 2px solid green;
+    border: 2px solid darkblue;
+    box-sizing: content-box;
 } 
 
 .selector{
-    width: 20px;
-    height: 20px;
-    background-color: rgb(0, 39, 0);
-    border-radius: 50%;
+    width: inherit;
+    height: inherit;
+    background-color: rgb(1, 1, 65);
+    border-radius: 100%;
     border: 5px solid black;
+    box-sizing: border-box;
 }
 
-.table-holder{
+
+
+
+/* =====TABLE STYLING===== */
+.table_container{
+    width: 100%;
+    max-height: 98%;
+    /* overflow-y: scroll; */
+    display: none;
+}
+
+.table_holder{
+    padding: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    background-color: var(--innerColor);
+    border-bottom: 1px solid #0078D7;
+}
+
+.table_holder:hover{
+    background-color: var(--myColor);
+    color: black;
+}
+
+#table-sp-ul{
+    display: none;
+}
+
+#create-table-form{
+    width: 40%;
+    height: 30%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: var(--bkgColor);
+    border-radius: 1rem;
+    border: 5px groove var(--myColor);
+    display: none;
+    position: absolute;
+    margin-top: 12vh;
+}
+
+#create-table-form input{
+    padding: 10px;
+    background-color: var(--innerColor);
+    border-radius: 5px;
+    text-align: center;
+    outline: none;
+}
+
+#create-table-btn{
+    width: 50%;
+    transform: translate(50%);
+    cursor: pointer;
+}
+
+#create-table-btn:hover{
+    background-color: var(--myColor);
+    color: var(--hoverColor);
+}
+
+#create-table-form #rm-btn{
+    width: 70px;
+    cursor: pointer;
+}
+
+#create-table-form #rm-btn:hover{
+    background-color: var(--myColor);
+    color: var(--hoverColor);
+}
+
+
+
+/* .table-holder{
     width: 100%;
     padding: 10px 0px 10px 0px;
     border-bottom: 1px solid green;
@@ -381,7 +470,6 @@
 }
 
 #tableForm{
-    /* display: none; */
     display: flex;
     flex-direction: column;
 }
@@ -482,21 +570,6 @@
     border: 5px solid black;
 } 
 
-#table-name{
-    display: none;
-}
-
-#databaseName{
-    display: none;
-}
-
-
-.glow{
-    background-color: rgb(3, 212, 3);
-    border-color: lawngreen;
-}
-
-
 .table{
     padding: 10px;
     border-bottom: 1px solid green;
@@ -505,12 +578,6 @@
 
 .table:hover{
     background-color: var(--myColor);
-}
-
-.table-container{
-    width: 100%;
-    height: 100%;
-    margin-bottom: 70px;
 }
 
 #table-content{
@@ -522,7 +589,6 @@
 }
 
 #table{
-    /* width: 80%; */
     table-layout: auto;
     background-color: green;
     margin-top: 5vh;
@@ -532,7 +598,7 @@
     width: min-content;
     background-color: black;
     padding: 5px;
-}
+} */
 
 #add-rec-form{
     display: flex;
@@ -589,4 +655,10 @@
 
 #space{
     display: none;
+}
+
+
+.glow{
+    background-color: blue;
+    border-color: #2e2eff;
 }

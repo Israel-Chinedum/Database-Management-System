@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>D.M.S</title>
     <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="Font-Awesome-6.5.2/Font-Awesome-6.5.2/css/all.css">
 </head>
 <body>
 
@@ -19,7 +19,7 @@
         <!-- HEADER NAVIGATION BAR -->
             <nav class="navigation-bar">
                 <ul>
-                    <li>Home</li>
+                    <li><a href="">Home</a></li>
                     <li>About</li>
                     <li>History</li>
                 </ul>
@@ -30,22 +30,19 @@
         <section id="body">
             <!-- SIDE PANEL -->
             <div class="side-panel">
-                <ul>
-                    <li id="showdb-panel-btn">Create Database</li>
-                    <li id="del-db-btn">Delete Database</li>
-                </ul>
+                <%-include("../partials/DbSpUl")%>
+                <%-include("../partials/TableSpUl")%>
             </div>
             <!-- MAIN PANEL -->
             <div class="main">
-                <p id="space"></p>
-                <p id="msg"><%=msg%></p>
-
+              <p id="msg"></p>
               <%- include("../partials/createDbPanel")%>
               <%- include("../partials/deletePanel")%>
               <%- include("../partials/createTableForm")%>
+              <!-- <%- include("../partials/createTableForm")%> -->
               <div id="add-rec-form"></div>
-
-               <div class="database_container"></div>
+              <div class="database_container"></div>
+              <div class="table_container"></div>
         </section>
 
         <!-- FOOTER SECTION -->
@@ -54,7 +51,6 @@
         </section>
     </div>
 
-    <script type="module" src="home js/home.js"></script>
-    <script type="module" src="home js/homePage_post_requests.js"></script>
+    <script type="module" src="DMS js/DMS.js"></script>
 </body>
 </html>
