@@ -7,7 +7,7 @@ class SearchEngine{
             } else{
                 data.style.display = 'flex';
             }
-        })
+        });
     }
 
 } export default new SearchEngine();

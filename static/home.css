@@ -9,19 +9,23 @@
     --bkgColor: rgb(7, 7, 7);
     --hoverBkg: rgb(4, 189, 4);
     --hoverColor: black;
-    --innerColor: rgb(22, 22, 22);
+    --innerColor: white;
+    --baseColor: rgb(22, 22, 22);
+    --bodyColor: rgb(19, 19, 19);
 }
 
 
 
 /* ==========OVERALL CONTAINER========== */
 #container{
-    width: 100svw;
-    height: 100svh;
-    background: rgb(7, 7, 7);
+    width: 100vw;
+    height: 100vh;
+    background: rgb(19, 19, 19);
     box-sizing: border-box;
     padding: 4px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 ::-webkit-scrollbar{
@@ -55,11 +59,15 @@
     justify-content: center;
 }
 
+.navigation-bar{
+    width: 15%;
+}
 
 .navigation-bar ul{
     display: flex;
     list-style-type: none;
-    justify-content: space-around;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .navigation-bar ul li{
@@ -67,20 +75,17 @@
     border-radius: 5px;
     cursor: pointer;
     box-sizing: border-box;
+    border: 1px solid transparent;
 }
 
 .navigation-bar ul li:hover{
-    background-color: var(--myColor);
+    border-color: var(--myColor);
     color: black;
 }
 
 .navigation-bar ul li a:hover{
     background-color: var(--myColor);
     color: black;
-}
-
-.navigation-bar{
-    width: 50%;
 }
 
 
@@ -140,7 +145,7 @@
 
 #msg{
     color: var(--myColor);
-    background-color: var(--bkgColor);
+    background-color: var(--baseColor);
     padding: 10px;
     width: max-content;
     position: absolute;
@@ -148,6 +153,9 @@
     border-radius: 7px;
     display: none;
     margin-top: 3vh;
+    z-index: 5;
+    align-self: center;
+    margin-left: 20%;
 }
 
 
@@ -166,12 +174,14 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background-color: var(--bkgColor);
+    background-color: var(--bodyColor);
     border-radius: 1rem;
     border: 5px groove var(--myColor);
     display: none;
     position: absolute;
+    justify-self: center;
     margin-top: 12vh;
+    z-index: 1;
 }
 
 #create-db-panel input{
@@ -182,25 +192,27 @@
     outline: none;
 }
 
-#create-db-btn{
+#create-db-panel #create-db-btn{
     width: 50%;
     transform: translate(50%);
     cursor: pointer;
+    background-color: var(--myColor);
+    color: white;
 }
 
-#create-db-btn:hover{
-    background-color: var(--myColor);
-    color: var(--hoverColor);
+#create-db-panel #create-db-btn:hover{
+    opacity: 0.7;
 }
 
 #create-db-panel #rm-btn{
     width: 70px;
     cursor: pointer;
+    background-color: var(--myColor);
+    color: white;
 }
 
 #create-db-panel #rm-btn:hover{
-    background-color: var(--myColor);
-    color: var(--hoverColor);
+    opacity: 0.7;
 }
 
 .database_container{
@@ -219,7 +231,11 @@
     border-radius: 5px;
     cursor: pointer;
     display: grid;
-    background-color: var(--innerColor);
+    background-color: var(--baseColor);
+}
+
+.database_container .database:hover{
+    opacity: 0.7;
 }
 
 .database span{
@@ -241,7 +257,7 @@
 .database_container .database p{
     width: max-content;
     height: 30px;
-    color: var(--hoverColor);
+    color: var(--baseColor);
 }
 
 
@@ -251,11 +267,13 @@
     height: 70vh;
     position: absolute;
     margin-top: 10vh;
-    background-color: var(--bkgColor);
+    background-color: var(--baseColor);
     flex-direction: column;
     align-content: center;
     border-radius: 1rem;
     border: 5px groove var(--myColor);
+    justify-self: center;
+    z-index: 1;
     display: none;
 }
 
@@ -263,6 +281,10 @@
     display: flex;
     justify-content: center;
     padding: 10px;
+}
+
+.del-inputs .btn:hover{
+    opacity: 0.7;
 }
 
 .del-inputs input{
@@ -273,8 +295,15 @@
     width: 100px;
 } 
 
+#del-database-btn{
+    background-color: var(--myColor);
+    color: white;
+}
+
 #del-exit{
     width: 50px;
+    background-color: var(--myColor);
+    color: white;
 }
 
 .del-inputs :nth-child(2){
@@ -342,16 +371,19 @@
 .table_container{
     width: 100%;
     max-height: 98%;
-    /* overflow-y: scroll; */
-    display: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .table_holder{
     padding: 10px;
     margin-bottom: 5px;
     cursor: pointer;
-    background-color: var(--innerColor);
-    border-bottom: 1px solid #0078D7;
+    background-color: rgb(30, 30, 34);
+    border-bottom: 5px solid var(--baseColor);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .table_holder:hover{
@@ -359,8 +391,34 @@
     color: black;
 }
 
+.table-name{
+    background-color: transparent;
+    outline: none;
+    width: max-content;
+
+}
+
+.tools{
+    width: 110px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 5%;
+}
+
+.tools i{
+    background-color: var(--baseColor);
+    border: 2px solid var(--myColor);
+    color: var(--myColor);
+    padding: 10px;
+    border-radius: 50%;
+}
+
 #table-sp-ul{
-    display: none;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #create-table-form{
@@ -370,12 +428,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background-color: var(--bkgColor);
+    background-color: var(--bodyColor);
     border-radius: 1rem;
     border: 5px groove var(--myColor);
     display: none;
     position: absolute;
     margin-top: 12vh;
+    align-self: center;
 }
 
 #create-table-form input{
@@ -386,26 +445,202 @@
     outline: none;
 }
 
-#create-table-btn{
+#create-table-form #create-table-btn{
+    background-color: var(--myColor);
     width: 50%;
     transform: translate(50%);
     cursor: pointer;
+    color: white;
 }
 
 #create-table-btn:hover{
-    background-color: var(--myColor);
-    color: var(--hoverColor);
+  opacity: 0.7;
 }
 
 #create-table-form #rm-btn{
     width: 70px;
     cursor: pointer;
+    background-color: var(--myColor);
+    color: white;
 }
 
 #create-table-form #rm-btn:hover{
-    background-color: var(--myColor);
-    color: var(--hoverColor);
+  opacity: 0.7;
 }
+
+#table{
+    background-color: var(--myColor);
+}
+
+#table td{
+    color: var(--myColor);
+    background-color: var(--baseColor);
+    padding: 10px;
+}
+
+#table tr:hover{
+    cursor: pointer;
+}
+
+
+#table thead th{
+    background-color: var(--myColor);
+    color: black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    padding: 10px;
+}
+
+#table thead th:nth-child(1){
+    border-left: none;
+}
+#table thead th:last-child{
+    border-right: none;
+}
+
+tr #delete, tr #rename{
+    padding: 0;
+}
+
+tr i{
+    box-sizing: border-box;
+    background-color: var(--baseColor);
+}
+
+.fa-trash:hover{
+    color: darkred;
+}
+
+.fa-edit:hover{
+    color: goldenrod;
+}
+
+.fa-save:hover{
+    color: green;
+}
+
+#create-headers{
+    padding: 13px;
+    border-radius: 5px;
+    background-color: var(--myColor);
+    color: black;
+    margin-top: 50vh;
+    cursor: pointer;
+    width: 200px;
+    justify-self: center;
+}
+
+#headers-container{
+   width: 500px;
+   justify-content: space-between;
+   padding: 10px;
+   height: 65vh;
+   overflow-y: scroll;
+   justify-self: center;
+}
+
+#headers-container div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    top: 0;
+}
+
+#headers-container div button{
+    background-color: var(--myColor);
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#headers-container form{
+    margin-top: 50px;
+}
+
+#headers-container form input{
+    font-size: 1.2rem;
+    padding: 10px;
+    width: 350px;
+    border-radius: 5px;
+    outline-color: var(--myColor);
+    margin-bottom: 7px;
+}
+
+.fa-plus{
+    padding: 10px;
+    background-color: var(--myColor);
+    border-radius: 50%;
+    color: black;
+    margin: 20px;
+    cursor: pointer;
+}
+
+#add-rec-form-holder{
+    height: 80vh;
+    position: fixed;
+    overflow-y: scroll;
+    top: 10vh;
+    left: 60%;
+    transform: translate(-50%);
+}
+
+#add-record-form{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--baseColor);
+    border: 2px groove var(--myColor);
+    border-radius: 1rem;
+    width: 350px;
+    margin-top: 5vh;
+}
+
+#add-record-form h1{
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#add-record-form input{
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    outline-color: var(--myColor);
+}
+
+#add-record-form button{
+    padding: 10px;
+    width: 50%;
+    margin: auto;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--myColor);
+    color: white;
+}
+
+#add-record-form button:hover, #add-record-form #exit-record-form-btn:hover{
+   opacity: 0.7;
+}
+
+#add-record-form #exit-record-form-btn{
+    width: max-content;
+    padding-bottom: 10px;
+    align-self: end;
+    background-color: var(--myColor);
+    color: white;
+}
+
+#main-table{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+    overflow-x: scroll;
+}
+
 
 
 

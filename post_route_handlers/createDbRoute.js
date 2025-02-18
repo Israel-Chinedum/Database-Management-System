@@ -9,7 +9,7 @@ export const createDatabase = (app, fs) => {
         if(DatabaseName){
             fs.access(`./All_Database/${DatabaseName}`, fs.constants.F_OK, (err) => {
                 if(err){
-                    fs.mkdir(`./All_Database/${DatabaseName}`, { recursive: true }, (error) => {
+                    fs.mkdir(`./All_Database/${DatabaseName}_${req.session.user.userID}`, { recursive: true }, (error) => {
                         if(error) throw error;
                             return res.json({
                                 msg: 'Database has been created!',

@@ -9,9 +9,49 @@
 </head>
 <body>
 
+    <!-- =====PAGES===== -->
+    <div id="all-elements" style="display: none;">
+
+        <!-- =====SIDE PANEL PAGES===== -->
+        <%-include("../partials/DbSpUl")%>
+        <%-include("../partials/TableSpUl")%>
+        <%-include("../partials/tableDataUl")%>
+
+
+
+
+        <!-- =====MAIN SECTION PAGES===== -->
+
+        <div class="database_container">
+            <%- include("../partials/createDbPanel")%>
+            <%- include("../partials/deletePanel")%>
+        </div>
+
+        <div class="table_container">
+            <%- include("../partials/createTableForm")%>
+        </div>
+
+        <div id="main-table">
+            <%-include("../partials/tableDataContainer")%>
+            <%-include("../partials/addRecordForm")%>
+            <%-include("../partials/tableHeaders")%>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- =====CONTAINER===== -->
     <div id="container">
+
+        <p id="msg"></p>
         
-        <!-- HEADER SECTION -->
+        <!-- =====HEADER SECTION===== -->
         <section id="header">
             <header>
                 <h1>D.M.S</h1>
@@ -19,36 +59,30 @@
         <!-- HEADER NAVIGATION BAR -->
             <nav class="navigation-bar">
                 <ul>
-                    <li><a href="">Home</a></li>
-                    <li>About</li>
-                    <li>History</li>
+                    <li title="database cluster" id="db-cluster"><i class="fa-solid fa-home"></i></li>
+                    <li title="previous" id="prev-table-list"><i class="fa-solid fa-arrow-circle-left"></i></li>
+                    <li id="signout-btn" title="signout"><i class="fa-solid fa-sign-out"></i></li>
                 </ul>
             </nav>
         </section>
 
-        <!-- BODY SECTION -->
+
+
+
+
+        <!-- =====BODY SECTION===== -->
         <section id="body">
-            <!-- SIDE PANEL -->
-            <div class="side-panel">
-                <%-include("../partials/DbSpUl")%>
-                <%-include("../partials/TableSpUl")%>
-            </div>
-            <!-- MAIN PANEL -->
+
+            <!-- =====SIDE PANEL===== -->
+            <div class="side-panel"></div>
+
+            <!-- =====MAIN PANEL===== -->
             <div class="main">
-              <p id="msg"></p>
-              <%- include("../partials/createDbPanel")%>
-              <%- include("../partials/deletePanel")%>
-              <%- include("../partials/createTableForm")%>
-              <!-- <%- include("../partials/createTableForm")%> -->
-              <div id="add-rec-form"></div>
-              <div class="database_container"></div>
-              <div class="table_container"></div>
-        </section>
-
-        <!-- FOOTER SECTION -->
-        <section id="footer">
+            </div>
 
         </section>
+
+    
     </div>
 
     <script type="module" src="DMS js/DMS.js"></script>

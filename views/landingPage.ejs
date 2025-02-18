@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="landingPage.css">
+    <link rel="stylesheet" href="Font-Awesome-6.5.2/Font-Awesome-6.5.2/css/all.css">
+</head>
+<body>
+
+<div class="all-elements" style="display: none;">
+
+    <!-- =====WELCOME PAGE===== -->
+    <div id="welcome-page">
+        <h1 id="welcome-text"></h1>
+        <div id="buttons">
+            <button id="signup-btn">Sign up</button>
+            <button class="signin-btn" id="signin1">Sign in</button>
+        </div>
+    </div>
+
+
+
+
+    <!-- =====SIGN UP PAGE===== -->
+     <div id="signup-page">
+        <i class="fa-solid fa-times"></i>
+        <form action="" id="signup-form">
+            <h1>Register</h1>
+            <input type="text" placeholder="Enter username" name="username" required>
+            <input type="password" placeholder="Enter password" name="password" required>
+            <button>Submit</button>
+        </form>
+     </div>
+
+
+
+
+     <div id="message-page">
+        <p id="msg"></p>
+        <button id="signin2" class="signin-btn">Sign in</button>
+        <button id="back-btn" style="display: none;">Back</button>
+     </div>
+
+
+
+
+     <!-- =====SIGN IN PAGE===== -->
+      <div id="signin-page">
+        <i class="fa-solid fa-times"></i>
+        <p id="errMsg"></p>
+          <form action="/getDMS" method="post" id="signin-form">
+            <h1>User Login</h1>
+            <input type="text" placeholder="username" name="username" required>
+            <input type="password" placeholder="password" name="password" required>
+            <button>Login</button>
+        </form>
+      </div>
+
+</div>
+
+
+
+
+      <!-- =====CONTAINER===== -->
+       <div id="container"></div>
+
+    <script src="landingPage.js" type="module"></script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+import { dbSelector } from "../serverTools/dbSelector.js";
 
 export const delDbRoute = (app, fs) => {
     app.post('/delDatabase', (req, res) => {
@@ -9,31 +10,35 @@ export const delDbRoute = (app, fs) => {
 
            //MAP THROUGH delData ARRAY AND DELETE ALL THE DATABASE IN THE ARRAY FROM THE All_Database FOLDER
             const deleteDb = delData.map(db => {
-               return new Promise((resolve, reject) => {
-                   fs.rmSync(`./All_Database/${db}`, {recursive: true});
-                   resolve(`${db} has been deleted`);
+                return new Promise((resolve, reject) => {
+                    try{
+                        fs.rmSync(`./All_Database/${db}_${req.session.user.userID}`, {recursive: true});
+                        resolve(`${db} has been deleted`);
+                    } catch(error){
+                        reject('An error occured while trying to delete database!');
+                    }
                 })
             });
-            console.log('data: ',deleteDb)
-            setTimeout(() => {
-                console.log('data-time: ', deleteDb)
-            },10000)
+            
+
         //    SEND RESPONSE BACK TO CLIENT
+
             Promise.all(deleteDb)
             .then((result) => { 
-                console.log(result);
+                console.log('Result: ', result);
                 console.log('Databse has been deleted');
                 setTimeout(() => {
                     const data = fs.readdirSync('./All_Database');
+                    const dbList = dbSelector(req, data);
                     res.json({
                         msg: 'Database has been deleted!',
-                        data
+                        data: dbList
                     });
-                }, 5000);
+                }, 1000);
             })
             .catch(err => {
                 console.log(err);
-                res.status(500).json({msg: 'An error occured!'});
+                res.status(500).json('An error occured while trying to delete database!');
             });
         }
     });
